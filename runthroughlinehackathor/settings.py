@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Mapping
 from pathlib import Path
+from types import MappingProxyType
 from typing import Self
 
 from pydantic import model_validator
@@ -9,6 +11,7 @@ from pydantic import PositiveInt
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
+from runthroughlinehackathor.models.gender import Gender
 
 
 class Settings(BaseSettings):
@@ -34,6 +37,18 @@ class Settings(BaseSettings):
     years_per_turn: PositiveInt = 5
 
     actions_file: Path = "resources/Akcje hackathon - Arkusz1.csv"
+    random_events_file: Path = "resources/Akcje hackathon - Arkusz2.csv"
+    reactions_file: Path = "resources/Akcje hackathon - Arkusz3.csv"
+
+    stage_two_step: PositiveInt = 2
+    stage_three_step: PositiveInt = 7
+
+    end_age: Mapping[Gender, PositiveInt] = MappingProxyType(
+        {
+            Gender.MALE: 65,
+            Gender.FEMALE: 60,
+        }
+    )
 
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:

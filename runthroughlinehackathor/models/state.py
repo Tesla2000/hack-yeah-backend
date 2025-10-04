@@ -1,3 +1,4 @@
+from typing import Optional
 from typing import Union
 from uuid import UUID
 
@@ -29,6 +30,8 @@ class State(BaseModel):
     big_actions: list[Action]
     small_actions: list[Action]
     random_event: RandomEvent
+    stage_summary: Optional[str]
+    is_game_finished: bool = False
 
     @computed_field
     def age(self) -> PositiveInt:
