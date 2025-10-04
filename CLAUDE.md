@@ -11,6 +11,16 @@ python -m runthroughlinehackathor.main
 uvicorn runthroughlinehackathor.main:app --reload
 ```
 
+**Run tests:**
+```bash
+python -m unittest discover tests
+# or run specific test file
+python -m unittest tests.test_api
+python -m unittest tests.test_models
+python -m unittest tests.test_state_update
+python -m unittest tests.test_action_selection
+```
+
 ## Project Setup
 
 - **Python version**: 3.12+
@@ -74,7 +84,7 @@ Settings loaded from `.env` file via Pydantic Settings (runthroughlinehackathor/
 
 ### Key Model Relationships
 
-- **ActionBase** (abstract): name, description, parameter_change
+- **ActionBase** (abstract): name, description, image_url, parameter_change
   - **Action**: extends ActionBase with type, time_cost, is_unique flag
   - **Reaction**: extends ActionBase (triggered responses)
 - **Parameters**: health, career, relations, money (supports addition via `__add__`)

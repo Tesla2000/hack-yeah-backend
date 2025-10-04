@@ -1,9 +1,13 @@
+import os
 import uuid
 
 import uvicorn
+from fastapi import Depends
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi import HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.responses import Response
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 from runthroughlinehackathor.models.gender import Gender
 from runthroughlinehackathor.models.parameters import Parameters
@@ -24,7 +28,23 @@ class _CreateNewGameInput(BaseModel):
     goal: str
 
 
-@app.post("/create-new-game")
+@app.get("/ping")
+async def ping():
+    return Response("pong")
+
+
+X_API_KEY = APIKeyHeader(name="X_API_KEY")
+
+
+def api_key_auth(x_api_key: str = Depends(X_API_KEY)):
+    if x_api_key != os.environ["X_API_KEY"]:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid api key",
+        )
+
+
+@app.post("/create-new-game", dependencies=[Depends(api_key_auth)])
 async def create_new_game(create_new_game_input: _CreateNewGameInput):
     gender_text = {Gender.MALE: "mężczyzną", Gender: "kobietą"}[
         create_new_game_input.gender
@@ -55,13 +75,13 @@ async def create_new_game(create_new_game_input: _CreateNewGameInput):
     )
 
 
-@app.post("/next-turn")
+@app.post("/next-turn", dependencies=[Depends(api_key_auth)])
 async def get_next_state(state_update: StateIncrement):
     state = next((s for s in states if s.id == state_update.state_id), None)
     if state is None:
-        return HTMLResponse(
-            content=f"No state with id={state_update.state_id}",
-            status_code=400,
+        return HTTPException(
+            detail=f"No state with id={state_update.state_id}",
+            status_code=404,
         )
     update_state(state, state_update)
     return JSONResponse(content=state.model_dump(mode="json"), status_code=200)
