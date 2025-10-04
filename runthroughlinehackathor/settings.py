@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=os.getenv("ENV_PATH", ".env"), extra="ignore"
     )
-    openai_api_key: SecretStr
+    openai_api_key: SecretStr = "sk-proj-"
 
     n_actions: PositiveInt = 8
     time_pre_turn: PositiveInt = 10
