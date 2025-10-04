@@ -6,6 +6,7 @@ from typing import Self
 
 from pydantic import model_validator
 from pydantic import PositiveInt
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
 
@@ -14,6 +15,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=os.getenv("ENV_PATH", ".env"), extra="ignore"
     )
+    openai_api_key: SecretStr
+
     n_actions: PositiveInt = 8
     time_pre_turn: PositiveInt = 10
     health_per_time_spent: PositiveInt = 1

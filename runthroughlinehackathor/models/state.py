@@ -26,6 +26,9 @@ class State(BaseModel):
     gender: Gender
     name: str
     goal: str
+    big_actions: list[Action]
+    small_actions: list[Action]
+    random_event: RandomEvent
 
     @computed_field
     def age(self) -> PositiveInt:
