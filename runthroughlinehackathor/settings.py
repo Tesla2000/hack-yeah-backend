@@ -22,6 +22,11 @@ class Settings(BaseSettings):
 
     small_action_max_cost: PositiveInt = 3
 
+    initial_health: PositiveInt = 100
+    initial_other_parameters: PositiveInt = 20
+
+    initial_turn_description: str = "You are a "
+
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:
         if self.n_big_actions == self.n_big_actions + self.n_small_actions:

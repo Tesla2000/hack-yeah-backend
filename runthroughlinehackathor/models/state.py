@@ -19,3 +19,4 @@ class State(BaseModel):
     current_phase: Phase
     game_turn: NonNegativeInt
     gender: Gender
+    goal: str
