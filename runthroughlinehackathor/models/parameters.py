@@ -1,7 +1,7 @@
 from typing import Self
 
 from pydantic import BaseModel
-from pydantic.v1 import NonNegativeInt
+from pydantic import NonNegativeInt
 
 
 class Parameters(BaseModel):
