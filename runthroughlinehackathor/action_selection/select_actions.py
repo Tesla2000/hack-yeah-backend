@@ -16,7 +16,13 @@ from runthroughlinehackathor.settings import settings
 
 
 async def select_actions(state: State) -> list[Action]:
-    action_stream = await _shuffle_actions_with_weight(state, action_list)
+    valid_actions = tuple(
+        action
+        for action in action_list
+        if (not action.is_unique or action not in state.history)
+        and state.current_stage in action.allowed_stages
+    )
+    action_stream = await _shuffle_actions_with_weight(state, valid_actions)
     chosen_actions = []
     for action in action_stream:
         if _can_add_action(action, chosen_actions):
@@ -49,16 +55,11 @@ def _can_add_action(action: Action, chosen_actions: list[Action]) -> bool:
 
 
 async def _shuffle_actions_with_weight(
-    state: State, action_to_choose: Iterable[Action]
+    state: State, valid_actions: Iterable[Action]
 ) -> Iterable[Action]:
     model = ChatOpenAI(
         model="gpt-4o-mini", temperature=0
     ).with_structured_output(list[_ActionWeight])
-    valid_actions = tuple(
-        action
-        for action in action_to_choose
-        if not action.is_unique or action not in state.history
-    )
     action_weights: list[_ActionWeight] = await model.ainvoke(
         [
             HumanMessage(

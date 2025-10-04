@@ -11,4 +11,4 @@ class ActionBase(BaseModel, ABC):
     description: str
     image_url: HttpUrl
     parameter_change: Parameters
-    valid_phases: list[Stage]
+    allowed_stages: list[Stage]
