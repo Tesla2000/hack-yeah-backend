@@ -16,6 +16,7 @@ from runthroughlinehackathor.models.state import State
 from runthroughlinehackathor.settings import settings
 from runthroughlinehackathor.state_update.state_increment import StateIncrement
 from runthroughlinehackathor.state_update.update_state import update_state
+from starlette.responses import RedirectResponse
 
 app = FastAPI()
 
@@ -85,6 +86,11 @@ async def get_next_state(state_update: StateIncrement):
         )
     update_state(state, state_update)
     return JSONResponse(content=state.model_dump(mode="json"), status_code=200)
+
+
+@app.get("/")
+async def redirect_root_to_docs():
+    return RedirectResponse("/docs")
 
 
 if __name__ == "__main__":
