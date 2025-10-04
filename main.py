@@ -54,7 +54,7 @@ def api_key_auth(x_api_key: str = Depends(X_API_KEY)):
 
 @app.post("/create-new-game", dependencies=[Depends(api_key_auth)])
 async def create_new_game(create_new_game_input: _CreateNewGameInput):
-    gender_text = {Gender.MALE: "mężczyzną", Gender: "kobietą"}[
+    gender_text = {Gender.MALE: "mężczyzną", Gender.FEMALE: "kobietą"}[
         create_new_game_input.gender
     ]
     age_text = f"{settings.initial_age} letni" + (
