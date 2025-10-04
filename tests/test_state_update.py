@@ -25,7 +25,7 @@ class TestApplyAction(unittest.TestCase):
                 health=100, career=20, relations=20, money=20
             ),
             history=[],
-            turn_descriptions=["Initial state"],
+            turn_description=["Initial state"],
             current_stage=Stage.FIRST,
             game_turn=0,
             gender=Gender.MALE,
@@ -96,7 +96,7 @@ class TestUpdateState(unittest.TestCase):
                 health=100, career=20, relations=20, money=20
             ),
             history=[],
-            turn_descriptions=["Initial state"],
+            turn_description=["Initial state"],
             current_stage=Stage.FIRST,
             game_turn=0,
             gender=Gender.MALE,

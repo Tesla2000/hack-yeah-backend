@@ -114,7 +114,7 @@ class TestState(unittest.TestCase):
                 health=100, career=20, relations=20, money=20
             ),
             history=[],
-            turn_descriptions=["Starting the game"],
+            turn_description=["Starting the game"],
             current_stage=Stage.FIRST,
             game_turn=0,
             gender=Gender.MALE,
@@ -132,7 +132,7 @@ class TestState(unittest.TestCase):
                 health=100, career=20, relations=20, money=20
             ),
             history=[],
-            turn_descriptions=["Turn 0"],
+            turn_description=["Turn 0"],
             current_stage=Stage.FIRST,
             game_turn=0,
             gender=Gender.MALE,

@@ -1,14 +1,13 @@
 from typing import Self
 
 from pydantic import BaseModel
-from pydantic import NonNegativeInt
 
 
 class Parameters(BaseModel):
-    career: NonNegativeInt
-    relations: NonNegativeInt
-    health: NonNegativeInt
-    money: NonNegativeInt
+    career: int
+    relations: int
+    health: int
+    money: int
 
     def __add__(self, other: Self) -> Self:
         return Parameters(
