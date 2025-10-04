@@ -9,8 +9,8 @@ from runthroughlinehackathor.models.action.action import Action
 from runthroughlinehackathor.models.action.reaction import Reaction
 from runthroughlinehackathor.models.gender import Gender
 from runthroughlinehackathor.models.parameters import Parameters
-from runthroughlinehackathor.models.phase import Phase
 from runthroughlinehackathor.models.random_event import RandomEvent
+from runthroughlinehackathor.models.stage import Stage
 from runthroughlinehackathor.settings import settings
 
 HistoryElement = Union[Action, RandomEvent, Reaction]
@@ -21,7 +21,7 @@ class State(BaseModel):
     parameters: Parameters
     history: list[HistoryElement]
     turn_descriptions: list[str]
-    current_phase: Phase
+    current_stage: Stage
     game_turn: NonNegativeInt
     gender: Gender
     goal: str

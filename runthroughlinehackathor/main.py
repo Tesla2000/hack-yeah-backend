@@ -11,7 +11,7 @@ from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 from runthroughlinehackathor.models.gender import Gender
 from runthroughlinehackathor.models.parameters import Parameters
-from runthroughlinehackathor.models.phase import Phase
+from runthroughlinehackathor.models.stage import Stage
 from runthroughlinehackathor.models.state import State
 from runthroughlinehackathor.settings import settings
 from runthroughlinehackathor.state_update.state_increment import StateIncrement
@@ -65,7 +65,7 @@ async def create_new_game(create_new_game_input: _CreateNewGameInput):
         turn_descriptions=settings.initial_turn_description.format(
             gender=gender_text, age=age_text
         ),
-        current_phase=Phase.FIRST,
+        current_stage=Stage.FIRST,
         game_turn=0,
         gender=create_new_game_input.gender,
         goal=create_new_game_input.goal,
