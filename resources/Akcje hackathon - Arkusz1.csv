@@ -1,39 +1,51 @@
-Akcja,Unikatowe,Młodość,Dorosłość,Starość,Waga ,Kariera,Zdrowie,Pieniądze,Relacje,Typ
-Kursy i szkolenia online,FALSE,TRUE,TRUE,TRUE,1,10,,-10,,Kariera
-Kursy i szkolenia stacjonarnie,FALSE,TRUE,TRUE,TRUE,2,15,,-15,10,Kariera
-Koło naukowe,FALSE,TRUE,FALSE,FALSE,1,10,,,10,Kariera
-Praca dorywcza,FALSE,TRUE,TRUE,TRUE,3,,-15,15,5,Pieniądze
-Wyprowadzka od rodzicow,TRUE,TRUE,,,1,,5,-10,-5,Zdrowie
-Nadgodziny,FALSE,FALSE,TRUE,TRUE,2,10,-15,5,,Pieniądze
-Uprawianie sportu,FALSE,TRUE,TRUE,TRUE,1,,10,-5,5,Zdrowie
-Wakacje,FALSE,TRUE,TRUE,TRUE,1,,10,-10,5,Zdrowie
-Spotkanie rodzinne,FALSE,TRUE,TRUE,TRUE,1,,-5,,10,Relacje
-Prawo jazdy,TRUE,TRUE,TRUE,TRUE,3,10,,-15,,Kariera
-Profilaktyka medyczna,FALSE,TRUE,TRUE,TRUE,1,,5,-5,,Zdrowie
-Spotkanie ze znajomymi,FALSE,TRUE,TRUE,TRUE,1,,,-5,5,Relacje
-Zdrowe odżywianie ,FALSE,TRUE,TRUE,TRUE,2,,10,-10,,Zdrowie
-Jedzenie na mieście,FALSE,TRUE,TRUE,TRUE,1,,-10,-10,10,Relacje
-Dbanie o wygląd,FALSE,TRUE,TRUE,TRUE,1,5,5,-10,5,Relacje
-Kupno samochodu,FALSE,TRUE,TRUE,TRUE,1,,5,-15,,Zdrowie
-Studia,TRUE,TRUE,TRUE,TRUE,5,40,,-20,30,Kariera
-Małżeństwo,TRUE,FALSE,TRUE,TRUE,5,,10,-20,20,Relacje
-Zakup domu,TRUE,FALSE,TRUE,TRUE,5,,10,-50,5,Zdrowie
-Wynajem,FALSE,TRUE,TRUE,TRUE,1,,,-10,5,Relacje
-Dziecko,FALSE,TRUE,TRUE,TRUE,5,-10,-10,-10,30,Relacje
-Książki,FALSE,TRUE,TRUE,TRUE,1,5,5,-5,,Kariera
-Zmiana pracy,FALSE,FALSE,TRUE,TRUE,2,10,-15,10,5,Pieniądze
-Nawiązywanie kontaktów w pracy,FALSE,TRUE,TRUE,TRUE,1,5,,,5,Kariera
-Otwarcie biznesu,FALSE,TRUE,TRUE,TRUE,4,15,-20,10,5,Pieniądze
-Nauka języka ,FALSE,TRUE,TRUE,TRUE,2,10,,-5,,Kariera
-Jazda na nartach,FALSE,TRUE,TRUE,TRUE,1,,5,-10,5,Zdrowie
-Jazda na rowerze,FALSE,TRUE,TRUE,TRUE,1,,5,-5,5,Zdrowie
-Fitness domowy,FALSE,TRUE,TRUE,TRUE,1,,5,,,Zdrowie
-Wysypianie się ,FALSE,TRUE,TRUE,TRUE,1,-5,5,,,Zdrowie
-Worklife balance,FALSE,TRUE,TRUE,TRUE,2,-5,15,-5,,Zdrowie 
-Oszczędzanie pieniędzy,FALSE,TRUE,TRUE,TRUE,1,,,5,-5,Pieniądze
-Ucz się o finansach ,FALSE,TRUE,TRUE,TRUE,1,,,5,,Pieniądze
-Wolontariat,FALSE,TRUE,TRUE,TRUE,1,,5,-5,5,Relacje
-Picie alkoholu/używki,FALSE,TRUE,TRUE,TRUE,1,,-5,-5,10,Relacje
-Hobby,FALSE,TRUE,TRUE,TRUE,1,,5,-5,5,Zdrowie
-Remont w domu,FALSE,TRUE,TRUE,TRUE,1,,5,-5,,Zdrowie
-Rozwiń swoje umiejętności komunikacji,FALSE,TRUE,TRUE,TRUE,1,5,,-5,5,Kariera
+Akcja,Unikatowe,Młodość,Dorosłość,Starość,Waga ,Kariera,Zdrowie,Pieniądze,Relacje,Typ,Opis
+Kurs rozwoju osobistego,FALSE,TRUE,TRUE,TRUE,2,10,,,-5,Kariera,Udział w kursie poprawiającym kompetencje i pewność siebie
+Zdrowe śniadania,FALSE,TRUE,TRUE,TRUE,1,,5,,-5,Zdrowie,Wprowadzenie zdrowych nawyków żywieniowych
+Codzienne spacery,FALSE,TRUE,TRUE,TRUE,1,,5,,5,Zdrowie,Krótka codzienna aktywność fizyczna
+Spotkania networkingowe,FALSE,TRUE,TRUE,TRUE,2,10,,,-5,Kariera,Budowanie relacji zawodowych na wydarzeniach branżowych
+Rozmowa z partnerem o planach,FALSE,TRUE,TRUE,TRUE,1,,,-5,10,Relacje,Wzmacnianie relacji poprzez otwartą komunikację
+Trening siłowy,FALSE,TRUE,TRUE,TRUE,2,,10,-5,10,Zdrowie,Regularne ćwiczenia poprawiające kondycję i samopoczucie
+Warsztaty z komunikacji,FALSE,TRUE,TRUE,TRUE,2,10,,-5,10,Kariera,Ćwiczenie skutecznej komunikacji interpersonalnej
+Systematyczne oszczędzanie,FALSE,TRUE,TRUE,TRUE,2,,,-5,10,Pieniądze,Odkładanie ustalonej kwoty miesięcznie
+Inwestycje edukacyjne,TRUE,TRUE,TRUE,TRUE,3,20,,-10,15,Kariera,Inwestowanie w rozwój umiejętności
+Weekend bez telefonu,FALSE,TRUE,TRUE,TRUE,1,,5,,-5,Zdrowie,Odpoczynek od technologii
+Rodzinny wyjazd,FALSE,TRUE,TRUE,TRUE,2,,-5,-10,20,Relacje,Spędzenie wspólnego czasu z rodziną
+Planowanie budżetu,FALSE,TRUE,TRUE,TRUE,2,5,,-5,10,Pieniądze,Analiza i plan wydatków na kolejny miesiąc
+Udział w wolontariacie,FALSE,TRUE,TRUE,TRUE,2,10,,-5,15,Relacje,Pomaganie innym i budowanie więzi społecznych
+Nauka języka obcego,FALSE,TRUE,TRUE,TRUE,3,20,,,-10,Kariera,Stała nauka dla poszerzenia perspektyw zawodowych
+Regularne badania lekarskie,FALSE,TRUE,TRUE,TRUE,1,,-5,,-5,Zdrowie,Kontrola stanu zdrowia i profilaktyka
+Książka rozwojowa,FALSE,TRUE,TRUE,TRUE,1,5,,,5,Kariera,Czytanie książek rozwijających umiejętności miękkie
+Trening oddechowy,FALSE,TRUE,TRUE,TRUE,1,,5,,5,Zdrowie,Techniki relaksacyjne obniżające stres
+Zajęcia grupowe fitness,FALSE,TRUE,TRUE,TRUE,2,,10,-5,10,Zdrowie,Aktywność fizyczna i kontakt z ludźmi
+Prowadzenie bloga eksperckiego,FALSE,TRUE,TRUE,TRUE,3,20,,-10,20,Kariera,Budowanie marki osobistej i dzielenie się wiedzą
+Rozwijanie pasji artystycznej,FALSE,TRUE,TRUE,TRUE,2,10,5,-5,15,Relacje,Rozwijanie kreatywności i poznawanie nowych osób
+Planowanie kariery zawodowej,TRUE,TRUE,TRUE,TRUE,3,15,,,-5,Kariera,Analiza celów zawodowych i kierunku rozwoju
+Zajęcia z jogi,FALSE,TRUE,TRUE,TRUE,1,,10,,-5,Zdrowie,Poprawa elastyczności i redukcja stresu
+Weekend z przyjaciółmi,FALSE,TRUE,TRUE,TRUE,1,,,-10,15,Relacje,Relaks i umacnianie więzi towarzyskich
+Samodzielne gotowanie,FALSE,TRUE,TRUE,TRUE,1,,5,-5,10,Zdrowie,"Przygotowywanie domowych, zdrowych posiłków"
+Nowe szkolenie branżowe,FALSE,TRUE,TRUE,TRUE,2,15,,,-5,Kariera,Podniesienie kwalifikacji zawodowych
+Ograniczenie słodyczy,FALSE,TRUE,TRUE,TRUE,1,,-5,,10,Zdrowie,Poprawa diety poprzez redukcję cukru
+Konto oszczędnościowe,TRUE,TRUE,TRUE,TRUE,2,,,-5,10,Pieniądze,Bezpieczne gromadzenie środków na przyszłość
+Medytacja codzienna,FALSE,TRUE,TRUE,TRUE,1,,5,,5,Zdrowie,Krótka codzienna praktyka uważności
+Praca nad projektem pobocznym,FALSE,TRUE,TRUE,TRUE,3,15,-5,-10,20,Kariera,Realizacja własnych pomysłów zawodowych
+Mentoring młodszych kolegów,FALSE,TRUE,TRUE,TRUE,2,10,-5,,-5,Kariera,Wspieranie innych i budowanie autorytetu
+Stały plan treningowy,FALSE,TRUE,TRUE,TRUE,3,,15,-5,20,Zdrowie,Utrzymanie kondycji poprzez regularny wysiłek
+Wspólne gotowanie z partnerem,FALSE,TRUE,TRUE,TRUE,1,,,-5,10,Relacje,Budowanie bliskości podczas wspólnego posiłku
+Rozpoczęcie studiów podyplomowych,TRUE,TRUE,TRUE,TRUE,4,40,,-20,25,Kariera,Długoterminowy rozwój kompetencji zawodowych
+Zakup mieszkania,TRUE,TRUE,TRUE,TRUE,5,,,-50,40,Pieniądze,Inwestycja w stabilność finansową i komfort życia
+Tworzenie planu inwestycyjnego,TRUE,TRUE,TRUE,TRUE,4,20,,-10,25,Pieniądze,Strategiczne planowanie wzrostu majątku
+Regularny sen,FALSE,TRUE,TRUE,TRUE,1,,-5,,10,Zdrowie,Zdrowy rytm dobowy i lepsze samopoczucie
+Kurs mindfulness,FALSE,TRUE,TRUE,TRUE,2,10,5,,-5,Zdrowie,Nauka uważności i redukcja stresu
+Zajęcia taneczne,FALSE,TRUE,TRUE,TRUE,1,,5,-5,10,Relacje,Nauka tańca i wspólna zabawa
+Wystąpienie publiczne,FALSE,TRUE,TRUE,TRUE,2,10,-5,,-5,Kariera,Ćwiczenie pewności siebie i autoprezentacji
+Tworzenie CV i portfolio,FALSE,TRUE,TRUE,TRUE,1,5,,,-5,Kariera,Odświeżenie materiałów zawodowych
+Coaching kariery,TRUE,TRUE,TRUE,TRUE,3,15,,-5,15,Kariera,Wsparcie mentora w rozwoju zawodowym
+Zwiększenie aktywności fizycznej,FALSE,TRUE,TRUE,TRUE,2,,10,-5,10,Zdrowie,Więcej ruchu w codziennym życiu
+Wspólne wakacje,FALSE,TRUE,TRUE,TRUE,2,,-5,-15,25,Relacje,Odpoczynek i wspólne przeżycia
+Planowanie emerytury,TRUE,TRUE,TRUE,TRUE,4,,,-10,20,Pieniądze,Przygotowanie finansowe na przyszłość
+Zdrowe gotowanie w domu,FALSE,TRUE,TRUE,TRUE,1,,5,-5,10,Zdrowie,Przygotowywanie zbilansowanych posiłków
+Otwarcie działalności gospodarczej,TRUE,TRUE,TRUE,TRUE,5,30,-20,30,30,Pieniądze,Stworzenie własnego źródła dochodu
+Zapis na siłownię,FALSE,TRUE,TRUE,TRUE,1,,10,-5,5,Zdrowie,Początek regularnych ćwiczeń
+Nowy projekt zespołowy,FALSE,TRUE,TRUE,TRUE,2,10,-5,-5,15,Kariera,Współpraca i rozwój kompetencji miękkich
+Budowanie zaufania w relacji,FALSE,TRUE,TRUE,TRUE,2,,,-5,15,Relacje,Wzmacnianie więzi poprzez szczerość i wsparcie
+Zwiększenie kompetencji cyfrowych,TRUE,TRUE,TRUE,TRUE,3,15,,-10,20,Kariera,Rozwój umiejętności pracy z technologią

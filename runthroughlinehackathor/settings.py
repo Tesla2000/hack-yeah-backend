@@ -3,7 +3,6 @@ from __future__ import annotations
 import os
 from collections.abc import Mapping
 from pathlib import Path
-from types import MappingProxyType
 from typing import Self
 
 from pydantic import model_validator
@@ -43,12 +42,10 @@ class Settings(BaseSettings):
     stage_two_step: PositiveInt = 2
     stage_three_step: PositiveInt = 7
 
-    end_age: Mapping[Gender, PositiveInt] = MappingProxyType(
-        {
-            Gender.MALE: 65,
-            Gender.FEMALE: 60,
-        }
-    )
+    end_age: Mapping[Gender, PositiveInt] = {
+        Gender.MALE: 65,
+        Gender.FEMALE: 60,
+    }
 
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:

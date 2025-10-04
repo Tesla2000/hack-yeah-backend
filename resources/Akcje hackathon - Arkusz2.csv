@@ -1,7 +1,13 @@
-Akcja,IdOpcja1,IdOpcja2
-Ciężka choroba przewlekła,1,2
-Ulegasz wypadkowi,3,4
-"Znajomy zaproponował ci inwestycję w startupie, który prowadzi",5,6
-"Bezdomny piesek trafił na twoją wycieraczkę, zaadoptujesz?",7,8
-Dostajesz świetną propozycję pracy na drugim końcu świata,9,10
-Myślisz o rzuceniu wszystkiego i podróży camperem,11,12
+Akcja,Opis,IdOpcja1,IdOpcja2
+"Ciężka choroba przewlekła","Dowiadujesz się, że masz poważny problem zdrowotny wymagający leczenia.",1,2
+"Ulegasz wypadkowi","Nieprzyjemne zdarzenie powoduje obrażenia i wymaga natychmiastowej decyzji.",3,4
+"Znajomy zaproponował ci inwestycję w startupie, który prowadzi","Masz szansę zarobić, ale też stracić — inwestycja jest ryzykowna.",5,6
+"Bezdomny piesek trafił na twoją wycieraczkę, zaadoptujesz?","Spotykasz małego psa potrzebującego pomocy.",7,8
+"Dostajesz świetną propozycję pracy na drugim końcu świata","Oferta życia, ale oznacza przeprowadzkę daleko od bliskich.",9,10
+"Myślisz o rzuceniu wszystkiego i podróży camperem","Marzysz o wolności i zmianie stylu życia.",11,12
+"Niespodziewane dziedziczenie","Otrzymujesz informację, że odziedziczyłeś majątek po odległym krewnym.",13,14
+"Kryzys w związku","Partner zaczyna się odsuwać, trzeba zdecydować co dalej.",15,16
+"Awans w pracy","Dostajesz propozycję objęcia kierowniczego stanowiska.",17,18
+"Narodziny dziecka","Twoje życie właśnie się zmienia — na zawsze.",19,20
+"Inflacja szaleje","Ceny rosną szybciej niż twoja pensja, czas na decyzję finansową.",21,22
+"Propozycja przeprowadzki do innego miasta","Masz szansę na nowe życie, ale wymaga to wielu zmian.",23,24

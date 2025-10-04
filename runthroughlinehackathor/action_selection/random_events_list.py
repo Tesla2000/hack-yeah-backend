@@ -28,13 +28,13 @@ _reactions: dict[int, Reaction] = dict(
 random_events: tuple[RandomEvent, ...] = tuple(
     RandomEvent(
         name=name,
-        description="",
+        description=description,
         reactions=[
             _reactions[int(reaction_1_id)],
             _reactions[int(reaction_2_id)],
         ],
     )
-    for name, reaction_1_id, reaction_2_id in csv.reader(
+    for name, description, reaction_1_id, reaction_2_id in csv.reader(
         settings.random_events_file.read_text().splitlines()[1:]
     )
 )

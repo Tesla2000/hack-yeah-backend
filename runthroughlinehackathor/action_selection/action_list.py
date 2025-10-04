@@ -16,7 +16,7 @@ type_mapper = {
 action_list: tuple[Action, ...] = tuple(
     Action(
         name=action_name,
-        description="",
+        description=description,
         image_url="https://i.imgflip.com/61gawy.jpg",
         parameter_change=Parameters(
             career=career or 0,
@@ -31,7 +31,7 @@ action_list: tuple[Action, ...] = tuple(
         time_cost=time_cost,
         is_unique=bool_mapper[unique],
     )
-    for action_name, unique, valid_at_stage_1, valid_at_stage_2, valid_at_stage_3, time_cost, career, health, money, relations, type_ in csv.reader(
+    for action_name, unique, valid_at_stage_1, valid_at_stage_2, valid_at_stage_3, time_cost, career, health, money, relations, type_, description in csv.reader(
         settings.actions_file.read_text().splitlines()[1:]
     )
 )
