@@ -30,7 +30,7 @@ class State(BaseModel):
     big_actions: list[Action]
     small_actions: list[Action]
     random_event: RandomEvent
-    stage_summary: Optional[str]
+    stage_summary: Optional[str] = None
     is_game_finished: bool = False
 
     @computed_field
