@@ -14,7 +14,7 @@ RUN poetry config virtualenvs.create false
 COPY pyproject.toml poetry.lock ./
 
 # Install dependencies only (no dev dependencies)
-RUN poetry install --no-interaction --no-ansi -vvv
+RUN poetry install --no-interaction --no-ansi --no-root
 
 # Copy application code and resources
 COPY runthroughlinehackathor/ ./runthroughlinehackathor/

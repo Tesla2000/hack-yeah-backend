@@ -1,20 +1,18 @@
-[project]
+[tool.poetry]
 name = "runthroughlinehackathor"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Tesla2000",email = "fratajczak124@gmail.com"}
-]
+authors = ["Tesla2000 <fratajczak124@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.12,<4.0.0"
-dependencies = [
-    "fastapi (>=0.118.0,<0.119.0)",
-    "langchain (>=0.3.27,<0.4.0)",
-    "langchain-openai (>=0.3.34,<0.4.0)",
-    "pydantic-settings (>=2.11.0,<3.0.0)",
-    "uvicorn (>=0.37.0,<0.38.0)",
-]
+packages = [{ include = "runthroughlinehackathor" }]
 
+[tool.poetry.dependencies]
+python = ">=3.12,<4.0.0"
+fastapi = ">=0.118.0,<0.119.0"
+langchain = ">=0.3.27,<0.4.0"
+langchain-openai = ">=0.3.34,<0.4.0"
+pydantic-settings = ">=2.11.0,<3.0.0"
+uvicorn = ">=0.37.0,<0.38.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
