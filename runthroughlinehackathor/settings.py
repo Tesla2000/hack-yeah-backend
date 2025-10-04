@@ -25,7 +25,9 @@ class Settings(BaseSettings):
     initial_health: PositiveInt = 100
     initial_other_parameters: PositiveInt = 20
 
-    initial_turn_description: str = "You are a "
+    initial_turn_description: str = "Jesteś {age} {gender}. Twoim obecnym ce"
+    initial_age: PositiveInt = 15
+    years_per_turn: PositiveInt = 5
 
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:
