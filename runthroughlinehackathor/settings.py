@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Self
 
 from pydantic import model_validator
@@ -28,6 +29,8 @@ class Settings(BaseSettings):
     initial_turn_description: str = "Jesteś {age} {gender}. Twoim obecnym ce"
     initial_age: PositiveInt = 15
     years_per_turn: PositiveInt = 5
+
+    actions_file: Path = "resources/Akcje hackathon - Arkusz1.csv"
 
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:

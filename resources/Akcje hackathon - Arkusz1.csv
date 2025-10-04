@@ -1,0 +1,41 @@
+Akcja,Unikatowe,Młodość,Dorosłość,Starość,Waga ,Kariera,Zdrowie,Pieniądze,Relacje,Typ
+Kursy i szkolenia online,FALSE,TRUE,TRUE,TRUE,1,10,,-10,,Kariera
+Kursy i szkolenia stacjonarnie,FALSE,TRUE,TRUE,TRUE,2,15,,-15,10,Kariera
+Koło naukowe,FALSE,TRUE,FALSE,FALSE,1,10,,,10,Kariera
+Praca dorywcza,FALSE,TRUE,TRUE,TRUE,3,,-15,15,5,Pieniądze
+Wyprowadzka od rodzicow,TRUE,TRUE,,,1,,5,-10,-5,Zdrowie
+Nadgodziny,FALSE,FALSE,TRUE,TRUE,2,10,-15,5,,Pieniądze
+Uprawianie sportu,FALSE,TRUE,TRUE,TRUE,1,,10,-5,5,Zdrowie
+Wakacje,FALSE,TRUE,TRUE,TRUE,1,,10,-10,5,Zdrowie
+Spotkanie rodzinne,FALSE,TRUE,TRUE,TRUE,1,,-5,,10,Relacje
+Prawo jazdy,TRUE,TRUE,TRUE,TRUE,3,10,,-15,,Kariera
+Profilaktyka medyczna,FALSE,TRUE,TRUE,TRUE,1,,5,-5,,Zdrowie
+Spotkanie ze znajomymi,FALSE,TRUE,TRUE,TRUE,1,,,-5,5,Relacje
+Zdrowe odżywianie ,FALSE,TRUE,TRUE,TRUE,2,,10,-10,,Zdrowie
+Jedzenie na mieście,FALSE,TRUE,TRUE,TRUE,1,,-10,-10,10,Relacje
+Dbanie o wygląd,FALSE,TRUE,TRUE,TRUE,1,5,5,-10,5,Relacje
+Kupno samochodu,FALSE,TRUE,TRUE,TRUE,1,,5,-15,,Zdrowie
+Studia,TRUE,TRUE,TRUE,TRUE,5,40,,-20,30,Kariera
+Małżeństwo,TRUE,FALSE,TRUE,TRUE,5,,10,-20,20,Relacje
+Zakup domu,TRUE,FALSE,TRUE,TRUE,5,,10,-50,5,Zdrowie
+Wynajem,FALSE,TRUE,TRUE,TRUE,1,,,-10,5,Relacje
+Dziecko,FALSE,TRUE,TRUE,TRUE,5,-10,-10,-10,30,Relacje
+Książki,FALSE,TRUE,TRUE,TRUE,1,5,5,-5,,Kariera
+Zmiana pracy,FALSE,FALSE,TRUE,TRUE,2,10,-15,10,5,Pieniądze
+Nawiązywanie kontaktów w pracy,FALSE,TRUE,TRUE,TRUE,1,5,,,5,Kariera
+Otwarcie biznesu,FALSE,TRUE,TRUE,TRUE,4,15,-20,10,5,Pieniądze
+Nauka języka ,FALSE,TRUE,TRUE,TRUE,2,10,,-5,,Kariera
+Jazda na nartach,FALSE,TRUE,TRUE,TRUE,1,,5,-10,5,Zdrowie
+Jazda na rowerze,FALSE,TRUE,TRUE,TRUE,1,,5,-5,5,Zdrowie
+Fitness domowy,FALSE,TRUE,TRUE,TRUE,1,,5,,,Zdrowie
+Wysypianie się ,FALSE,TRUE,TRUE,TRUE,1,-5,5,,,Zdrowie
+Worklife balance,FALSE,TRUE,TRUE,TRUE,2,-5,15,-5,,Zdrowie 
+Oszczędzanie pieniędzy,FALSE,TRUE,TRUE,TRUE,1,,,5,-5,Pieniądze
+Ucz się o finansach ,FALSE,TRUE,TRUE,TRUE,1,,,5,,Pieniądze
+Wolontariat,FALSE,TRUE,TRUE,TRUE,1,,5,-5,5,Relacje
+Picie alkoholu/używki,FALSE,TRUE,TRUE,TRUE,1,,-5,-5,10,Relacje
+Hobby,FALSE,TRUE,TRUE,TRUE,1,,5,-5,5,Zdrowie
+Remont w domu,FALSE,TRUE,TRUE,TRUE,1,,5,-5,,Zdrowie
+Rozwiń swoje umiejętności komunikacji,FALSE,TRUE,TRUE,TRUE,1,5,,-5,5,Kariera
+,FALSE,FALSE,FALSE,FALSE,,,,,,
+,FALSE,FALSE,FALSE,TRUE,,,,,,

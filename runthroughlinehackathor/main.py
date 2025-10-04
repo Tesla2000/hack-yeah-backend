@@ -27,6 +27,7 @@ states: list[State] = []
 class _CreateNewGameInput(BaseModel):
     gender: Gender
     goal: str
+    name: str
 
 
 @app.get("/ping")
@@ -62,13 +63,14 @@ async def create_new_game(create_new_game_input: _CreateNewGameInput):
             money=settings.initial_other_parameters,
         ),
         history=[],
-        turn_descriptions=settings.initial_turn_description.format(
+        turn_description=settings.initial_turn_description.format(
             gender=gender_text, age=age_text
         ),
         current_stage=Stage.FIRST,
         game_turn=0,
         gender=create_new_game_input.gender,
         goal=create_new_game_input.goal,
+        name=create_new_game_input.name,
     )
     states.append(new_state)
     return JSONResponse(

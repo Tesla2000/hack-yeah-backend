@@ -20,10 +20,11 @@ class State(BaseModel):
     id: UUID
     parameters: Parameters
     history: list[HistoryElement]
-    turn_descriptions: list[str]
+    turn_description: str
     current_stage: Stage
     game_turn: NonNegativeInt
     gender: Gender
+    name: str
     goal: str
 
     @computed_field
