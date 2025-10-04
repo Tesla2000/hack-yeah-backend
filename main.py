@@ -2,7 +2,6 @@ import asyncio
 import os
 import uuid
 
-import uvicorn
 from fastapi import Depends
 from fastapi import FastAPI
 from fastapi import HTTPException
@@ -116,8 +115,3 @@ async def get_next_state(state_update: StateIncrement):
 @app.get("/")
 async def redirect_root_to_docs():
     return RedirectResponse("/docs")
-
-
-if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
