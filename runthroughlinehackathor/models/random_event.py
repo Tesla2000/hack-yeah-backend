@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from runthroughlinehackathor.models.reaction import Reaction
+from runthroughlinehackathor.models.action.reaction import Reaction
 
 
 class RandomEvent(BaseModel):
