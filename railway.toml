@@ -3,4 +3,3 @@
 [deploy]
 healthcheckPath = "/ping"
 healthcheckTimeout = 100
-restartPolicyType = "never"
