@@ -1,6 +1,7 @@
 import random
-from collections.abc import Container
 from collections.abc import Iterable
+from itertools import chain
+from itertools import cycle
 
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
@@ -14,12 +15,50 @@ from runthroughlinehackathor.models.state import State
 from runthroughlinehackathor.settings import settings
 
 
-async def select_actions(
-    state: State, n_actions: PositiveInt = settings.n_actions
-) -> list[Action]:
+async def select_actions(state: State) -> list[Action]:
+    action_stream = await _shuffle_actions_with_weight(state, action_list)
+    chosen_actions = []
+    for action in action_stream:
+        if _can_add_action(action, chosen_actions):
+            chosen_actions.append(action)
+        if len(chosen_actions) == settings.n_actions:
+            return chosen_actions
+    raise ValueError("Infinite stream exhausted")
+
+
+def _can_add_action(action: Action, chosen_actions: list[Action]) -> bool:
+    if action in chosen_actions:
+        return False
+    chosen_actions = chosen_actions + [action]
+    n_remaining_actions_to_gather = settings.n_actions - len(chosen_actions)
+    present_types = frozenset(a.type for a in chosen_actions)
+    n_remaining_types = len(ActionType) - len(present_types)
+    if n_remaining_types > n_remaining_actions_to_gather:
+        return False
+    n_small_actions = sum(
+        a.time_cost <= settings.small_action_max_cost for a in chosen_actions
+    )
+    if n_small_actions > settings.n_small_actions:
+        return False
+    n_big_actions = sum(
+        a.time_cost > settings.small_action_max_cost for a in chosen_actions
+    )
+    if n_big_actions > settings.n_big_actions:
+        return False
+    return True
+
+
+async def _shuffle_actions_with_weight(
+    state: State, action_to_choose: Iterable[Action]
+) -> Iterable[Action]:
     model = ChatOpenAI(
         model="gpt-4o-mini", temperature=0
     ).with_structured_output(list[_ActionWeight])
+    valid_actions = tuple(
+        action
+        for action in action_to_choose
+        if not action.is_unique or action not in state.history
+    )
     action_weights: list[_ActionWeight] = await model.ainvoke(
         [
             HumanMessage(
@@ -27,62 +66,20 @@ async def select_actions(
                 "Given state history. "
                 "Weights should determine the probability of occurrence of given decision for user."
                 f"Current user parameters are {state.parameters.model_dump_json(indent=2)}\n"
-                f"Current history of previous user actions is {'\n'.join(elem.model_dump_json(indent=2) for elem in state.history)}"
+                f"Current history of previous user actions is {'\n'.join(elem.model_dump_json(indent=2) for elem in state.history)}\n"
+                f"You must add weights to the following actions {'\n'.join(action.model_dump_json(indent=2) for action in valid_actions)}"
             )
         ]
     )
     name_to_weight = {a.action_name: a.action_weight for a in action_weights}
     action_weight_pairs = tuple(
-        (a, name_to_weight.get(a.name, 1)) for a in action_list
+        (a, name_to_weight.get(a.name, 1)) for a in valid_actions
     )
-    cards_of_each_type = _get_cards_of_each_type(action_weight_pairs)
-    remaining_cards = _remove_card_from_weighs(
-        action_weight_pairs, cards_of_each_type
+    actions_with_weights = list(
+        chain.from_iterable(w * (a,) for a, w in action_weight_pairs)
     )
-    rest_of_cards = _get_rest_of_cards(
-        remaining_cards, n_actions - len(cards_of_each_type)
-    )
-    return cards_of_each_type + rest_of_cards
-
-
-def _remove_card_from_weighs(
-    action_weight_pairs: Iterable[tuple[Action, int]],
-    removed_action: Container[Action],
-) -> list[tuple[Action, int]]:
-    return list(
-        (a, w) for a, w in action_weight_pairs if a not in removed_action
-    )
-
-
-def _get_cards_of_each_type(
-    action_weight_pairs: Iterable[tuple[Action, int]],
-) -> list[Action]:
-    return [
-        random.choices(
-            tuple(a for a, _ in action_weight_pairs if a.type == action_type),
-            weights=tuple(
-                w for a, w in action_weight_pairs if a.type == action_type
-            ),
-        )[0]
-        for action_type in ActionType
-    ]
-
-
-def _get_rest_of_cards(
-    action_weight_pairs: list[tuple[Action, int]], n_remaining_actions: int
-) -> list[Action]:
-    assert n_remaining_actions >= 0
-    remaining_actions = []
-    for _ in range(n_remaining_actions):
-        next_action = random.choices(
-            tuple(a for a, _ in action_weight_pairs),
-            weights=tuple(w for a, w in action_weight_pairs),
-        )[0]
-        action_weight_pairs = _remove_card_from_weighs(
-            action_weight_pairs, next_action
-        )
-        remaining_actions.append(next_action)
-    return remaining_actions
+    random.shuffle(actions_with_weights)
+    return cycle(actions_with_weights)
 
 
 class _ActionWeight(BaseModel):
