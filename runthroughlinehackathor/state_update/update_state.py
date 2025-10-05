@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from math import floor
 
 from langchain_core.messages import HumanMessage
@@ -17,6 +18,8 @@ from runthroughlinehackathor.state_update.apply_action import apply_action
 from runthroughlinehackathor.state_update.state_increment import StateIncrement
 
 previous_states = []
+
+_logger = logging.getLogger(__name__)
 
 
 async def update_state(state: State, state_update: StateIncrement) -> None:
@@ -49,7 +52,10 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
         if isinstance(a, Action)
     )
     remaining_time = settings.time_pre_turn - spent_time
-    assert remaining_time >= 0
+    if remaining_time < 0:
+        error_message = f"No remaining time chosen actions are {state_update.chosen_actions}"
+        _logger.exception(error_message)
+        raise ValueError(error_message)
     state.parameters.health += settings.health_per_time_spent * remaining_time
     state.parameters.money += floor(
         settings.career_to_money_coefficient * state.parameters.career
