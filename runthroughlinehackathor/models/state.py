@@ -22,7 +22,7 @@ class State(BaseModel):
     id: UUID
     parameters: Parameters
     history: list[HistoryElement]
-    turn_description: str
+    turn_descriptions: list[str]
     current_stage: Stage
     game_turn: NonNegativeInt
     gender: Gender

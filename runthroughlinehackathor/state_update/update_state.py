@@ -60,14 +60,16 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
     state.parameters.money += floor(
         settings.career_to_money_coefficient * state.parameters.career
     )
-    actions, random_event = await asyncio.gather(
+    actions, random_event, turn_description = await asyncio.gather(
         select_actions(
             history=state.history,
             current_stage=state.current_stage,
             parameters=state.parameters,
         ),
         select_random_event(state.history),
+        _generate_turn_description(state, state_update),
     )
+    state.turn_descriptions.append(turn_description)
     state.random_event = random_event
     state.history.append(random_event)
     state.big_actions = list(
@@ -108,6 +110,25 @@ async def _generate_summary(previous_stage: Stage, state: State) -> str:
                     f"Parametry w pierwszym stane {previous_state.parameters}\n"
                     f"Parametry w drugim stane {state.parameters}\n"
                     f"decyzje użytkownika {state.history[len(previous_state.history):]} zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza"
+                )
+            ]
+        )
+    ).content
+
+
+async def _generate_turn_description(
+    state: State, state_increment: StateIncrement
+) -> str:
+    return (
+        await ChatOpenAI(
+            name="gpt-4o-mini", api_key=settings.openai_api_key
+        ).ainvoke(
+            [
+                HumanMessage(
+                    f"Podsumuj zmiany jakich dokonał użytkowinik w poprzedmi kroku zmiany to {state_increment.chosen_action_references}\n"
+                    "Zwóć histerię biorąc pod uwagę, że zmiany zaszły na przestrzeni 5 lat\n"
+                    f"Historie z poprzednich pięcioletnich okresów to {state.turn_descriptions}"
+                    "Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza"
                 )
             ]
         )

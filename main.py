@@ -80,9 +80,11 @@ async def create_new_game(create_new_game_input: _CreateNewGameInput):
             id=uuid.uuid4(),
             parameters=parameters,
             history=[random_event],
-            turn_description=settings.initial_turn_description.format(
-                age=settings.initial_age
-            ),
+            turn_descriptions=[
+                settings.initial_turn_description.format(
+                    age=settings.initial_age
+                )
+            ],
             current_stage=current_stage,
             game_turn=0,
             gender=create_new_game_input.gender,
