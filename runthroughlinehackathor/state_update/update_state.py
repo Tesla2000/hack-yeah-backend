@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from itertools import filterfalse
 from math import floor
 
 from langchain_core.messages import HumanMessage
@@ -24,8 +25,18 @@ _logger = logging.getLogger(__name__)
 
 async def update_state(state: State, state_update: StateIncrement) -> None:
     previous_states.append(state.model_copy(deep=True))
-    for action in state_update.chosen_actions:
+    for action in filterfalse(
+        Action.__instancecheck__, state_update.chosen_actions
+    ):
         apply_action(state, action)
+    spent_time = 0
+    for action in filter(
+        Action.__instancecheck__, state_update.chosen_actions
+    ):
+        if spent_time + action.time_cost <= settings.time_pre_turn:
+            apply_action(state, action)
+        else:
+            break
     if any(
         parameter_value < 0
         for parameter_value in state.parameters.model_dump().values()
@@ -46,16 +57,7 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
             )
         ).content
         return
-    spent_time = sum(
-        a.time_cost
-        for a in state_update.chosen_actions
-        if isinstance(a, Action)
-    )
     remaining_time = settings.time_pre_turn - spent_time
-    if remaining_time < 0:
-        error_message = f"No remaining time chosen actions are {state_update.chosen_actions}"
-        _logger.exception(error_message)
-        raise ValueError(error_message)
     state.parameters.health += settings.health_per_time_spent * remaining_time
     state.parameters.money += floor(
         settings.career_to_money_coefficient * state.parameters.career
