@@ -9,6 +9,7 @@ from runthroughlinehackathor.action_selection.select_actions import (
 from runthroughlinehackathor.action_selection.select_random_event import (
     select_random_event,
 )
+from runthroughlinehackathor.models.action.action import Action
 from runthroughlinehackathor.models.stage import Stage
 from runthroughlinehackathor.models.state import State
 from runthroughlinehackathor.settings import settings
@@ -42,7 +43,11 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
             )
         ).content
         return
-    spent_time = sum(a.time_cost for a in state_update.chosen_actions)
+    spent_time = sum(
+        a.time_cost
+        for a in state_update.chosen_actions
+        if isinstance(a, Action)
+    )
     remaining_time = settings.time_pre_turn - spent_time
     assert remaining_time >= 0
     state.parameters.health += settings.health_per_time_spent * remaining_time
