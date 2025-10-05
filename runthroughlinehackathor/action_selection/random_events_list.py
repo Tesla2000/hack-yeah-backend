@@ -11,7 +11,7 @@ reactions: dict[int, Reaction] = dict(
         Reaction(
             id=id_,
             description=description,
-            image_url="https://i.imgflip.com/61gawy.jpg",
+            image_url=image_url,
             parameter_change=Parameters(
                 career=career or 0,
                 relations=relations or 0,
@@ -21,8 +21,8 @@ reactions: dict[int, Reaction] = dict(
             result=result,
         ),
     )
-    for id_, description, career, health, money, relations, result in (
-        csv.reader(settings.reactions_file.read_text().splitlines()[1:])
+    for id_, description, career, health, money, relations, result, image_url in csv.reader(
+        settings.reactions_file.read_text().splitlines()[1:]
     )
 )
 

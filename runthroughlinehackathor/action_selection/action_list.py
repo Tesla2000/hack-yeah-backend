@@ -17,7 +17,7 @@ action_list: tuple[Action, ...] = tuple(
     Action(
         name=action_name,
         description=description,
-        image_url="https://i.imgflip.com/61gawy.jpg",
+        image_url=image_url,
         parameter_change=Parameters(
             career=career or 0,
             relations=relations or 0,
@@ -32,7 +32,7 @@ action_list: tuple[Action, ...] = tuple(
         is_unique=bool_mapper[unique],
         prerequisite_names=list(filter(None, prerequisites.split(","))),
     )
-    for action_name, unique, valid_at_stage_1, valid_at_stage_2, valid_at_stage_3, time_cost, career, health, money, relations, type_, description, prerequisites in csv.reader(
+    for action_name, unique, valid_at_stage_1, valid_at_stage_2, valid_at_stage_3, time_cost, career, health, money, relations, type_, description, prerequisites, image_url in csv.reader(
         settings.actions_file.read_text().splitlines()[1:]
     )
 )
