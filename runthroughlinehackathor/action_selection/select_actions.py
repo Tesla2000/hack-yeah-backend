@@ -26,6 +26,9 @@ async def select_actions(
         for action in action_list
         if (not action.is_unique or action not in history)
         and current_stage in action.allowed_stages
+        and all(
+            prerequisite in history for prerequisite in action.prerequisites
+        )
     )
     action_stream = await _shuffle_actions_with_weight(
         parameters, history, valid_actions
