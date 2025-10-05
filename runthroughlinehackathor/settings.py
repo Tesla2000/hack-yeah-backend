@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import os
 from collections.abc import Mapping
-from pathlib import Path
 from typing import Self
 
+from pydantic import HttpUrl
 from pydantic import model_validator
 from pydantic import PositiveFloat
 from pydantic import PositiveInt
@@ -52,9 +52,9 @@ Czy osiągniesz sukces, szczęście, czy może coś pomiędzy?"""
     initial_age: PositiveInt = 15
     years_per_turn: PositiveInt = 5
 
-    actions_file: Path = "resources/Akcje hackathon - Arkusz1.csv"
-    random_events_file: Path = "resources/Akcje hackathon - Arkusz2.csv"
-    reactions_file: Path = "resources/Akcje hackathon - Arkusz3.csv"
+    actions_file: str = "Akcje hackathon - Arkusz1.csv"
+    random_events_file: str = "Akcje hackathon - Arkusz2.csv"
+    reactions_file: str = "Akcje hackathon - Arkusz3.csv"
 
     stage_two_step: PositiveInt = 2
     stage_three_step: PositiveInt = 7
@@ -70,6 +70,9 @@ Czy osiągniesz sukces, szczęście, czy może coś pomiędzy?"""
     has_spouse_action_name: str = "Małżeństwo"
     has_child_action_name: str = "Dziecko"
     is_happy_min_mean: PositiveInt = 50
+
+    VERCEL_BLOB_URL: HttpUrl = "https://blob.vercel-storage.com"
+    BLOB_READ_WRITE_TOKEN: SecretStr = "token"
 
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:

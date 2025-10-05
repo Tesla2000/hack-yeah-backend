@@ -1,6 +1,7 @@
 langchain-core
 pydantic
 starlette
+requests
 fastapi>=0.118.0,<0.119.0
 langchain>=0.3.27,<0.4.0
 langchain-openai>=0.3.34,<0.4.0

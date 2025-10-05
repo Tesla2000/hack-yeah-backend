@@ -1,5 +1,8 @@
 import csv
 
+from runthroughlinehackathor.action_selection._download_from_vercel_blob import (
+    download_from_vercel_blob,
+)
 from runthroughlinehackathor.models.action.reaction import Reaction
 from runthroughlinehackathor.models.parameters import Parameters
 from runthroughlinehackathor.models.random_event import RandomEvent
@@ -22,7 +25,7 @@ reactions: dict[int, Reaction] = dict(
         ),
     )
     for id_, description, career, health, money, relations, result, image_url in csv.reader(
-        settings.reactions_file.read_text().splitlines()[1:]
+        download_from_vercel_blob(settings.reactions_file).splitlines()[1:]
     )
 )
 
@@ -36,6 +39,10 @@ random_events: tuple[RandomEvent, ...] = tuple(
         ],
     )
     for name, description, reaction_1_id, reaction_2_id in csv.reader(
-        settings.random_events_file.read_text().splitlines()[1:]
+        download_from_vercel_blob(settings.random_events_file).splitlines()[1:]
     )
 )
+
+
+if __name__ == "__main__":
+    pass

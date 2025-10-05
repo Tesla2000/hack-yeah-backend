@@ -1,5 +1,8 @@
 import csv
 
+from runthroughlinehackathor.action_selection._download_from_vercel_blob import (
+    download_from_vercel_blob,
+)
 from runthroughlinehackathor.models.action.action import Action
 from runthroughlinehackathor.models.action.action_type import ActionType
 from runthroughlinehackathor.models.parameters import Parameters
@@ -33,7 +36,9 @@ action_list: tuple[Action, ...] = tuple(
         prerequisite_names=list(filter(None, prerequisites.split(","))),
     )
     for action_name, unique, valid_at_stage_1, valid_at_stage_2, valid_at_stage_3, time_cost, career, health, money, relations, type_, description, prerequisites, image_url in csv.reader(
-        settings.actions_file.read_text().splitlines()[1:]
+        download_from_vercel_blob(settings.actions_file).splitlines()[1:]
     )
 )
 name_to_action: dict[str, Action] = {a.name: a for a in action_list}
+if __name__ == "__main__":
+    pass
