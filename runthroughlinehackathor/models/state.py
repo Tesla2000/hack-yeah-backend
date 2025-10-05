@@ -5,6 +5,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 from pydantic import computed_field
+from pydantic import Field
 from pydantic import NonNegativeInt
 from pydantic import PositiveInt
 from runthroughlinehackathor.models.action.action import Action
@@ -22,7 +23,7 @@ class State(BaseModel):
     id: UUID
     parameters: Parameters
     history: list[HistoryElement]
-    turn_descriptions: list[str]
+    turn_descriptions: list[str] = Field(min_length=1)
     current_stage: Stage
     game_turn: NonNegativeInt
     gender: Gender
@@ -34,6 +35,10 @@ class State(BaseModel):
     stage_summary: Optional[str] = None
     is_game_finished: bool = False
     did_user_win: bool = True
+
+    @computed_field
+    def turn_description(self) -> str:
+        return self.turn_descriptions[-1]
 
     @computed_field
     def age(self) -> PositiveInt:
