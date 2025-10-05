@@ -81,13 +81,16 @@ async def _shuffle_actions_with_weight(
         await model.ainvoke(
             [
                 HumanMessage(
-                    "Assign weights to given actions. "
-                    "Given state history. "
-                    "Weights should determine the probability of occurrence of given decision for user."
-                    f"Current user parameters are {parameters.model_dump_json(indent=2)}\n"
-                    f"Current history of previous user actions is {'\n'.join(elem.model_dump_json(indent=2) for elem in history)}\n"
-                    f"You must add weights to the following actions {'\n'.join(action.model_dump_json(indent=2) for action in valid_actions)}"
-                    "Return only action that are more likely given history"
+                    settings.action_weight_prompt.format(
+                        parameters=parameters.model_dump_json(indent=2),
+                        history="\n".join(
+                            elem.model_dump_json(indent=2) for elem in history
+                        ),
+                        actions="\n".join(
+                            action.model_dump_json(indent=2)
+                            for action in valid_actions
+                        ),
+                    )
                 )
             ]
         )

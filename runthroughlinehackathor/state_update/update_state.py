@@ -49,18 +49,26 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
             ).ainvoke(
                 [
                     HumanMessage(
-                        "Wyjaśnij użytkownikowi dlaczego przegrał grę\n"
-                        f"Parametry w drugim stane {state.parameters}\n"
-                        f"decyzje użytkownika {state.history}. Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"
+                        settings.game_loss_prompt.format(
+                            parameters=state.parameters, history=state.history
+                        )
                     )
                 ]
             )
         ).content
         return
     remaining_time = settings.time_pre_turn - spent_time
-    state.parameters.health += settings.health_per_time_spent * remaining_time
-    state.parameters.money += floor(
-        settings.career_to_money_coefficient * state.parameters.career
+    state.parameters.health = min(
+        settings.MAX_PARAMETER_VALUE,
+        state.parameters.health
+        + settings.health_per_time_spent * remaining_time,
+    )
+    state.parameters.money = min(
+        settings.MAX_PARAMETER_VALUE,
+        state.parameters.money
+        + floor(
+            settings.career_to_money_coefficient * state.parameters.career
+        ),
     )
     actions, random_event, turn_description = await asyncio.gather(
         select_actions(
@@ -108,10 +116,13 @@ async def _generate_summary(previous_stage: Stage, state: State) -> str:
         ).ainvoke(
             [
                 HumanMessage(
-                    "Podsumuj zmiany jakie zrobił gracz między stanem pierwszym i drugim\n"
-                    f"Parametry w pierwszym stane {previous_state.parameters}\n"
-                    f"Parametry w drugim stane {state.parameters}\n"
-                    f"decyzje użytkownika {state.history[len(previous_state.history):]} zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"
+                    settings.stage_summary_prompt.format(
+                        previous_parameters=previous_state.parameters,
+                        current_parameters=state.parameters,
+                        history_diff=state.history[
+                            len(previous_state.history) :
+                        ],
+                    )
                 )
             ]
         )
@@ -127,10 +138,10 @@ async def _generate_turn_description(
         ).ainvoke(
             [
                 HumanMessage(
-                    f"Podsumuj zmiany jakich dokonał użytkowinik w poprzedmi kroku zmiany to {state_increment.chosen_action_references}\n"
-                    "Zwóć histerię biorąc pod uwagę, że zmiany zaszły na przestrzeni 5 lat\n"
-                    f"Historie z poprzednich pięcioletnich okresów to {state.turn_descriptions}"
-                    "Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"
+                    settings.turn_description_prompt.format(
+                        chosen_actions=state_increment.chosen_action_references,
+                        turn_descriptions=state.turn_descriptions,
+                    )
                 )
             ]
         )

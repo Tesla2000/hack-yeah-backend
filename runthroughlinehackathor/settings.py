@@ -74,6 +74,27 @@ Czy osiągniesz sukces, szczęście, czy może coś pomiędzy?"""
     VERCEL_BLOB_URL: HttpUrl = "https://blob.vercel-storage.com"
     BLOB_READ_WRITE_TOKEN: SecretStr = "token"
 
+    # LLM Prompts
+    action_weight_prompt: str = """Assign weights to given actions. Given state history. Weights should determine the probability of occurrence of given decision for user.
+Current user parameters are {parameters}
+Current history of previous user actions is {history}
+You must add weights to the following actions {actions}
+Return only action that are more likely given history"""
+
+    game_loss_prompt: str = """Wyjaśnij użytkownikowi dlaczego przegrał grę
+Parametry w drugim stane {parameters}
+decyzje użytkownika {history}. Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"""
+
+    stage_summary_prompt: str = """Podsumuj zmiany jakie zrobił gracz między stanem pierwszym i drugim
+Parametry w pierwszym stane {previous_parameters}
+Parametry w drugim stane {current_parameters}
+decyzje użytkownika {history_diff} zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"""
+
+    turn_description_prompt: str = """Podsumuj zmiany jakich dokonał użytkowinik w poprzedmi kroku zmiany to {chosen_actions}
+Zwóć histerię biorąc pod uwagę, że zmiany zaszły na przestrzeni 5 lat
+Historie z poprzednich pięcioletnich okresów to {turn_descriptions}
+Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"""
+
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:
         if self.n_big_actions == self.n_big_actions + self.n_small_actions:
