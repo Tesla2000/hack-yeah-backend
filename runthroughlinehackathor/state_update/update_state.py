@@ -26,6 +26,7 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
         for parameter_value in state.parameters.model_dump().values()
     ):
         state.is_game_finished = True
+        state.did_user_win = False
         state.stage_summary = (
             await ChatOpenAI(
                 name="gpt-4o-mini", api_key=settings.openai_api_key

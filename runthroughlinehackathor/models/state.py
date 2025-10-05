@@ -32,6 +32,7 @@ class State(BaseModel):
     random_event: RandomEvent
     stage_summary: Optional[str] = None
     is_game_finished: bool = False
+    did_user_win: bool = True
 
     @computed_field
     def age(self) -> PositiveInt:
