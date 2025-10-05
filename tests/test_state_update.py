@@ -7,6 +7,9 @@ from runthroughlinehackathor.action_selection.action_list import action_list
 from runthroughlinehackathor.action_selection.random_events_list import (
     random_events,
 )
+from runthroughlinehackathor.action_selection.random_events_list import (
+    reactions,
+)
 from runthroughlinehackathor.models.gender import Gender
 from runthroughlinehackathor.models.parameters import Parameters
 from runthroughlinehackathor.models.stage import Stage
@@ -187,10 +190,11 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
             for action in action_list
             if action.time_cost <= settings.small_action_max_cost
         ][:2]
+        action_names = [a.name for a in chosen_actions]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
@@ -216,15 +220,17 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
         )
 
         chosen_actions = [action_list[0], action_list[1]]
+        action_names = [a.name for a in chosen_actions]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
 
-        self.assertEqual(len(state.history), len(chosen_actions))
+        # History should contain actions + random_event
+        self.assertGreaterEqual(len(state.history), len(chosen_actions))
         for action in chosen_actions:
             self.assertIn(action, state.history)
 
@@ -254,6 +260,7 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
         ][
             :2
         ]  # 2 actions with time_cost=1
+        action_names = [a.name for a in chosen_actions]
 
         initial_health = state.parameters.health
         spent_time = sum(a.time_cost for a in chosen_actions)
@@ -261,7 +268,7 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
@@ -297,10 +304,11 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
         )
 
         chosen_actions = [action_list[0], action_list[1]]
+        action_names = [a.name for a in chosen_actions]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
@@ -326,16 +334,67 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
             stage_summary=None,
         )
 
-        chosen_actions = [action_list[0]]
+        action_names = [action_list[0].name]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
 
         self.assertIn(state.random_event, random_events)
+
+    async def test_update_state_adds_money_from_career(self):
+        """Test that update_state adds money based on career parameter."""
+        initial_career = 50
+        initial_money = 100
+        state = State(
+            id=self.test_id,
+            parameters=Parameters(
+                career=initial_career,
+                relations=20,
+                health=100,
+                money=initial_money,
+            ),
+            history=[],
+            turn_description="Test",
+            current_stage=Stage.FIRST,
+            game_turn=0,
+            gender=Gender.MALE,
+            name="Test",
+            goal="Test",
+            big_actions=[],
+            small_actions=[],
+            random_event=self.random_event,
+            stage_summary=None,
+        )
+
+        # Choose action with no money change to isolate career-to-money conversion
+        action_with_no_money = next(
+            (a for a in action_list if a.parameter_change.money == 0),
+            action_list[0],
+        )
+        action_names = [action_with_no_money.name]
+
+        state_update = StateIncrement(
+            state_id=self.test_id,
+            chosen_action_references=action_names,
+        )
+
+        await update_state(state, state_update)
+
+        # Calculate expected money: initial + action change + career * coefficient
+        expected_money_from_career = (
+            initial_career + action_with_no_money.parameter_change.career
+        ) * settings.career_to_money_coefficient
+        expected_total_money = (
+            initial_money
+            + action_with_no_money.parameter_change.money
+            + expected_money_from_career
+        )
+
+        self.assertEqual(state.parameters.money, expected_total_money)
 
     async def test_update_state_stage_transition_to_second(self):
         """Test that update_state transitions to second stage at correct turn."""
@@ -355,11 +414,11 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
             stage_summary=None,
         )
 
-        chosen_actions = [action_list[0]]
+        action_names = [action_list[0].name]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
@@ -384,11 +443,11 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
             stage_summary=None,
         )
 
-        chosen_actions = [action_list[0]]
+        action_names = [action_list[0].name]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
@@ -417,11 +476,11 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
             stage_summary=None,
         )
 
-        chosen_actions = [action_list[0]]
+        action_names = [action_list[0].name]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
@@ -451,11 +510,11 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
             stage_summary=None,
         )
 
-        chosen_actions = [action_list[0]]
+        action_names = [action_list[0].name]
 
         state_update = StateIncrement(
             state_id=self.test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         await update_state(state, state_update)
@@ -467,19 +526,58 @@ class TestUpdateState(unittest.IsolatedAsyncioTestCase):
 class TestStateIncrement(unittest.TestCase):
     """Test cases for StateIncrement model."""
 
-    def test_state_increment_creation(self):
-        """Test creating a StateIncrement instance."""
+    def test_state_increment_creation_with_action_names(self):
+        """Test creating a StateIncrement with action name references."""
         test_id = uuid.uuid4()
-        chosen_actions = [action_list[0], action_list[1]]
+        action_names = [action_list[0].name, action_list[1].name]
 
         increment = StateIncrement(
             state_id=test_id,
-            chosen_actions=chosen_actions,
+            chosen_action_references=action_names,
         )
 
         self.assertEqual(increment.state_id, test_id)
         self.assertEqual(len(increment.chosen_actions), 2)
-        self.assertEqual(increment.chosen_actions, chosen_actions)
+        # Check that actions are resolved correctly
+        self.assertEqual(increment.chosen_actions[0], action_list[0])
+        self.assertEqual(increment.chosen_actions[1], action_list[1])
+
+    def test_state_increment_with_reaction_ids(self):
+        """Test creating a StateIncrement with reaction ID references."""
+        test_id = uuid.uuid4()
+        reaction_ids = list(reactions.keys())[:2]
+
+        increment = StateIncrement(
+            state_id=test_id,
+            chosen_action_references=reaction_ids,
+        )
+
+        self.assertEqual(increment.state_id, test_id)
+        self.assertEqual(len(increment.chosen_actions), 2)
+        # Check that reactions are resolved correctly
+        self.assertEqual(
+            increment.chosen_actions[0], reactions[reaction_ids[0]]
+        )
+        self.assertEqual(
+            increment.chosen_actions[1], reactions[reaction_ids[1]]
+        )
+
+    def test_state_increment_with_mixed_references(self):
+        """Test StateIncrement with both action names and reaction IDs."""
+        test_id = uuid.uuid4()
+        action_name = action_list[0].name
+        reaction_id = list(reactions.keys())[0]
+
+        increment = StateIncrement(
+            state_id=test_id,
+            chosen_action_references=[reaction_id, action_name],
+        )
+
+        self.assertEqual(increment.state_id, test_id)
+        self.assertEqual(len(increment.chosen_actions), 2)
+        # Reactions (ints) should be sorted before actions (strings)
+        self.assertEqual(increment.chosen_actions[0], reactions[reaction_id])
+        self.assertEqual(increment.chosen_actions[1], action_list[0])
 
     def test_state_increment_with_empty_actions(self):
         """Test creating a StateIncrement with empty actions list."""
@@ -487,11 +585,23 @@ class TestStateIncrement(unittest.TestCase):
 
         increment = StateIncrement(
             state_id=test_id,
-            chosen_actions=[],
+            chosen_action_references=[],
         )
 
         self.assertEqual(increment.state_id, test_id)
         self.assertEqual(len(increment.chosen_actions), 0)
+
+    def test_chosen_actions_property_returns_tuple(self):
+        """Test that chosen_actions property returns a tuple."""
+        test_id = uuid.uuid4()
+        action_names = [action_list[0].name]
+
+        increment = StateIncrement(
+            state_id=test_id,
+            chosen_action_references=action_names,
+        )
+
+        self.assertIsInstance(increment.chosen_actions, tuple)
 
 
 if __name__ == "__main__":

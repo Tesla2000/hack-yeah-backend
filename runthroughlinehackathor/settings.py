@@ -6,9 +6,9 @@ from pathlib import Path
 from typing import Self
 
 from pydantic import model_validator
+from pydantic import PositiveFloat
 from pydantic import PositiveInt
 from pydantic import SecretStr
-from pydantic.v1 import PositiveFloat
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
 from runthroughlinehackathor.models.gender import Gender

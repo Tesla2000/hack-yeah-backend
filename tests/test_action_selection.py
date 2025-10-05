@@ -3,6 +3,13 @@
 import unittest
 
 from runthroughlinehackathor.action_selection.action_list import action_list
+from runthroughlinehackathor.action_selection.action_list import name_to_action
+from runthroughlinehackathor.action_selection.random_events_list import (
+    random_events,
+)
+from runthroughlinehackathor.action_selection.random_events_list import (
+    reactions,
+)
 from runthroughlinehackathor.action_selection.select_actions import (
     _can_add_action,
 )
@@ -215,3 +222,52 @@ class TestSelectRandomEvent(unittest.IsolatedAsyncioTestCase):
 
         event = await select_random_event([])
         self.assertIn(event, random_events)
+
+
+class TestActionListDictionaries(unittest.TestCase):
+    """Test cases for action_list dictionaries."""
+
+    def test_name_to_action_contains_all_actions(self):
+        """Test that name_to_action contains all actions from action_list."""
+        self.assertEqual(len(name_to_action), len(action_list))
+        for action in action_list:
+            self.assertIn(action.name, name_to_action)
+            self.assertEqual(name_to_action[action.name], action)
+
+    def test_name_to_action_retrieval(self):
+        """Test retrieving actions by name from name_to_action."""
+        first_action = action_list[0]
+        retrieved_action = name_to_action[first_action.name]
+        self.assertEqual(retrieved_action, first_action)
+        self.assertEqual(retrieved_action.name, first_action.name)
+        self.assertEqual(retrieved_action.type, first_action.type)
+
+    def test_name_to_action_keys_are_strings(self):
+        """Test that all keys in name_to_action are strings."""
+        for key in name_to_action.keys():
+            self.assertIsInstance(key, str)
+
+
+class TestReactionsDictionary(unittest.TestCase):
+    """Test cases for reactions dictionary."""
+
+    def test_reactions_contains_all_reaction_ids(self):
+        """Test that reactions dictionary contains all reaction IDs."""
+        self.assertGreater(len(reactions), 0)
+        for reaction_id in reactions.keys():
+            self.assertIsInstance(reaction_id, int)
+
+    def test_reactions_used_in_random_events(self):
+        """Test that reactions in random_events are from reactions dict."""
+        for event in random_events:
+            for reaction in event.reactions:
+                self.assertIn(reaction, reactions.values())
+
+    def test_reaction_retrieval(self):
+        """Test retrieving reactions by ID from reactions dict."""
+        if len(reactions) > 0:
+            first_id = list(reactions.keys())[0]
+            reaction = reactions[first_id]
+            self.assertIsNotNone(reaction)
+            self.assertIsInstance(reaction.description, str)
+            self.assertIsInstance(reaction.parameter_change, Parameters)
