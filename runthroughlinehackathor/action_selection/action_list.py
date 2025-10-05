@@ -30,7 +30,7 @@ action_list: tuple[Action, ...] = tuple(
         type=type_mapper[type_.strip()],
         time_cost=time_cost,
         is_unique=bool_mapper[unique],
-        prerequisite_names=prerequisites.split(","),
+        prerequisite_names=list(filter(None, prerequisites.split(","))),
     )
     for action_name, unique, valid_at_stage_1, valid_at_stage_2, valid_at_stage_3, time_cost, career, health, money, relations, type_, description, prerequisites in csv.reader(
         settings.actions_file.read_text().splitlines()[1:]
