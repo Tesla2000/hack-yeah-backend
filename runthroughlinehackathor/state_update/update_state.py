@@ -38,9 +38,9 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
             ).ainvoke(
                 [
                     HumanMessage(
-                        "Wyjaśnij użytkownikowi dlaczego przegrał grę 'Bieg przez życie'"
+                        "Wyjaśnij użytkownikowi dlaczego przegrał grę\n"
                         f"Parametry w drugim stane {state.parameters}\n"
-                        f"decyzje użytkownika {state.history}. Zwróć odpowiedź w języku polskim"
+                        f"decyzje użytkownika {state.history}. Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza"
                     )
                 ]
             )
@@ -107,7 +107,7 @@ async def _generate_summary(previous_stage: Stage, state: State) -> str:
                     "Podsumuj zmiany jakie zrobił gracz między stanem pierwszym i drugim\n"
                     f"Parametry w pierwszym stane {previous_state.parameters}\n"
                     f"Parametry w drugim stane {state.parameters}\n"
-                    f"decyzje użytkownika {state.history[len(previous_state.history):]} zwróć odpowiedź w języku polskim"
+                    f"decyzje użytkownika {state.history[len(previous_state.history):]} zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza"
                 )
             ]
         )
