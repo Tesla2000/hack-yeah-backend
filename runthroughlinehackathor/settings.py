@@ -52,6 +52,9 @@ class Settings(BaseSettings):
         Gender.FEMALE: 60,
     }
 
+    has_spouse_action_name: str = "Małżeństwo"
+    has_child_action_name: str = "Dziecko"
+
     @model_validator(mode="after")
     def verify_n_actions(self) -> Self:
         if self.n_big_actions == self.n_big_actions + self.n_small_actions:

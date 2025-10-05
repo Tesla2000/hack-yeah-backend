@@ -41,3 +41,19 @@ class State(BaseModel):
     @computed_field
     def is_healthy(self) -> bool:
         return self.parameters.health >= settings.healthy_threshold
+
+    @computed_field
+    def has_spouse(self) -> bool:
+        return any(
+            elem.name == settings.has_spouse_action_name
+            for elem in self.history
+            if isinstance(elem, Action)
+        )
+
+    @computed_field
+    def has_child(self) -> bool:
+        return any(
+            elem.name == settings.has_child_action_name
+            for elem in self.history
+            if isinstance(elem, Action)
+        )
