@@ -44,6 +44,8 @@ class Settings(BaseSettings):
     stage_two_step: PositiveInt = 2
     stage_three_step: PositiveInt = 7
 
+    MAX_PARAMETER_VALUE: PositiveInt = 100
+
     end_age: Mapping[Gender, PositiveInt] = {
         Gender.MALE: 65,
         Gender.FEMALE: 60,

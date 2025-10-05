@@ -1,6 +1,7 @@
 from typing import Self
 
 from pydantic import BaseModel
+from runthroughlinehackathor.settings import settings
 
 
 class Parameters(BaseModel):
@@ -11,8 +12,14 @@ class Parameters(BaseModel):
 
     def __add__(self, other: Self) -> Self:
         return Parameters(
-            career=self.career + other.career,
-            relations=self.relations + other.relations,
-            health=self.health + other.health,
-            money=self.money + other.money,
+            career=min(
+                settings.MAX_PARAMETER_VALUE, self.career + other.career
+            ),
+            relations=min(
+                settings.MAX_PARAMETER_VALUE, self.relations + other.relations
+            ),
+            health=min(
+                settings.MAX_PARAMETER_VALUE, self.health + other.health
+            ),
+            money=min(settings.MAX_PARAMETER_VALUE, self.money + other.money),
         )
