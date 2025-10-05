@@ -51,7 +51,7 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
                     HumanMessage(
                         "Wyjaśnij użytkownikowi dlaczego przegrał grę\n"
                         f"Parametry w drugim stane {state.parameters}\n"
-                        f"decyzje użytkownika {state.history}. Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza"
+                        f"decyzje użytkownika {state.history}. Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"
                     )
                 ]
             )
@@ -111,7 +111,7 @@ async def _generate_summary(previous_stage: Stage, state: State) -> str:
                     "Podsumuj zmiany jakie zrobił gracz między stanem pierwszym i drugim\n"
                     f"Parametry w pierwszym stane {previous_state.parameters}\n"
                     f"Parametry w drugim stane {state.parameters}\n"
-                    f"decyzje użytkownika {state.history[len(previous_state.history):]} zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza"
+                    f"decyzje użytkownika {state.history[len(previous_state.history):]} zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"
                 )
             ]
         )
@@ -130,7 +130,7 @@ async def _generate_turn_description(
                     f"Podsumuj zmiany jakich dokonał użytkowinik w poprzedmi kroku zmiany to {state_increment.chosen_action_references}\n"
                     "Zwóć histerię biorąc pod uwagę, że zmiany zaszły na przestrzeni 5 lat\n"
                     f"Historie z poprzednich pięcioletnich okresów to {state.turn_descriptions}"
-                    "Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza"
+                    "Zwróć odpowiedź w języku polskim zwracając się bezpośrednio do gracza nie wspominaj bezpośrednio o wartości statystyk. Postaraj się być jak najbardziej obrazowy. Znaczenie parametru kariera (zdolność do zarabiana pieniędy)"
                 )
             ]
         )
