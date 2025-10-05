@@ -1,4 +1,5 @@
 import asyncio
+from math import floor
 
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
@@ -45,7 +46,7 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
     remaining_time = settings.time_pre_turn - spent_time
     assert remaining_time >= 0
     state.parameters.health += settings.health_per_time_spent * remaining_time
-    state.parameters.money += (
+    state.parameters.money += floor(
         settings.career_to_money_coefficient * state.parameters.career
     )
     actions, random_event = await asyncio.gather(
