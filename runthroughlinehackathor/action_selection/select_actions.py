@@ -67,7 +67,9 @@ async def _shuffle_actions_with_weight(
     valid_actions: Iterable[Action],
 ) -> Iterable[Action]:
     class ActionsWithWeights(BaseModel):
-        actions_with_weights: list[_ActionWeight]
+        actions_with_weights: list[_ActionWeight] = Field(
+            description="Return up to 10 actions", max_length=10
+        )
 
     model = ChatOpenAI(
         model="gpt-4o-mini", temperature=0, api_key=settings.openai_api_key
@@ -82,6 +84,7 @@ async def _shuffle_actions_with_weight(
                     f"Current user parameters are {parameters.model_dump_json(indent=2)}\n"
                     f"Current history of previous user actions is {'\n'.join(elem.model_dump_json(indent=2) for elem in history)}\n"
                     f"You must add weights to the following actions {'\n'.join(action.model_dump_json(indent=2) for action in valid_actions)}"
+                    "Return only action that are more likely given history"
                 )
             ]
         )
