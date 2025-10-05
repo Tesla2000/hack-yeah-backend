@@ -60,9 +60,6 @@ def api_key_auth(x_api_key: str = Depends(X_API_KEY)):
 @app.post("/create-new-game", dependencies=[Depends(api_key_auth)])
 async def create_new_game(create_new_game_input: _CreateNewGameInput):
     try:
-        gender_text = {Gender.MALE: "mężczyzną", Gender.FEMALE: "kobietą"}[
-            create_new_game_input.gender
-        ]
         age_text = f"{settings.initial_age} letni" + (
             "m" if create_new_game_input.gender == Gender.MALE else "ą"
         )
@@ -87,7 +84,7 @@ async def create_new_game(create_new_game_input: _CreateNewGameInput):
             parameters=parameters,
             history=[random_event],
             turn_description=settings.initial_turn_description.format(
-                gender=gender_text, age=age_text
+                age=age_text
             ),
             current_stage=current_stage,
             game_turn=0,

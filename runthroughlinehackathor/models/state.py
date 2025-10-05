@@ -1,3 +1,4 @@
+from statistics import mean
 from typing import Optional
 from typing import Union
 from uuid import UUID
@@ -56,4 +57,11 @@ class State(BaseModel):
             elem.name == settings.has_child_action_name
             for elem in self.history
             if isinstance(elem, Action)
+        )
+
+    @computed_field
+    def is_happy(self) -> bool:
+        return (
+            mean(self.parameters.model_dump().values())
+            > settings.is_happy_min_mean
         )
