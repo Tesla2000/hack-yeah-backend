@@ -21,6 +21,25 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
     previous_states.append(state.model_copy(deep=True))
     for action in state_update.chosen_actions:
         apply_action(state, action)
+    if any(
+        parameter_value < 0
+        for parameter_value in state.parameters.model_dump().values()
+    ):
+        state.is_game_finished = True
+        state.stage_summary = (
+            await ChatOpenAI(
+                name="gpt-4o-mini", api_key=settings.openai_api_key
+            ).ainvoke(
+                [
+                    HumanMessage(
+                        "Wyjaśnij użytkownikowi dlaczego przegrał grę 'Bieg przez życie'"
+                        f"Parametry w drugim stane {state.parameters}\n"
+                        f"decyzje użytkownika {state.history}. Zwróć odpowiedź w języku polskim"
+                    )
+                ]
+            )
+        ).content
+        return
     spent_time = sum(a.time_cost for a in state_update.chosen_actions)
     remaining_time = settings.time_pre_turn - spent_time
     assert remaining_time >= 0
@@ -72,10 +91,10 @@ async def _generate_summary(previous_stage: Stage, state: State) -> str:
         ).ainvoke(
             [
                 HumanMessage(
-                    "Summarize changes that the player made that lead from state 1 to stare 2\n"
-                    f"State 1 parameters {previous_state.parameters}\n"
-                    f"State 2 parameters {state.parameters}\n"
-                    f"User decisions {state.history[len(previous_state.history):]}"
+                    "Podsumuj zmiany jakie zrobił gracz między stanem pierwszym i drugim\n"
+                    f"Parametry w pierwszym stane {previous_state.parameters}\n"
+                    f"Parametry w drugim stane {state.parameters}\n"
+                    f"decyzje użytkownika {state.history[len(previous_state.history):]} zwróć odpowiedź w języku polskim"
                 )
             ]
         )
