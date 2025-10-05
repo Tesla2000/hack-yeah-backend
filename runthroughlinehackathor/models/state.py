@@ -37,3 +37,7 @@ class State(BaseModel):
     @computed_field
     def age(self) -> PositiveInt:
         return self.game_turn * settings.years_per_turn + settings.initial_age
+
+    @computed_field
+    def is_healthy(self) -> bool:
+        return self.parameters.health >= settings.healthy_threshold
