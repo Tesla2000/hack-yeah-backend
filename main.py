@@ -78,7 +78,7 @@ async def create_new_game(create_new_game_input: _CreateNewGameInput):
     new_state = State(
         id=uuid.uuid4(),
         parameters=parameters,
-        history=history,
+        history=[random_event],
         turn_description=settings.initial_turn_description.format(
             gender=gender_text, age=age_text
         ),

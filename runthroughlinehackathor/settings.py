@@ -8,6 +8,7 @@ from typing import Self
 from pydantic import model_validator
 from pydantic import PositiveInt
 from pydantic import SecretStr
+from pydantic.v1 import PositiveFloat
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
 from runthroughlinehackathor.models.gender import Gender
@@ -22,6 +23,7 @@ class Settings(BaseSettings):
     n_actions: PositiveInt = 8
     time_pre_turn: PositiveInt = 10
     health_per_time_spent: PositiveInt = 1
+    career_to_money_coefficient: PositiveFloat = 0.1
 
     n_big_actions: PositiveInt = 3
     n_small_actions: PositiveInt = 5

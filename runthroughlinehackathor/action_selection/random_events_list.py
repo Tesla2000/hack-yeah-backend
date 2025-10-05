@@ -5,7 +5,7 @@ from runthroughlinehackathor.models.parameters import Parameters
 from runthroughlinehackathor.models.random_event import RandomEvent
 from runthroughlinehackathor.settings import settings
 
-_reactions: dict[int, Reaction] = dict(
+reactions: dict[int, Reaction] = dict(
     (
         int(id_),
         Reaction(
@@ -30,8 +30,8 @@ random_events: tuple[RandomEvent, ...] = tuple(
         name=name,
         description=description,
         reactions=[
-            _reactions[int(reaction_1_id)],
-            _reactions[int(reaction_2_id)],
+            reactions[int(reaction_1_id)],
+            reactions[int(reaction_2_id)],
         ],
     )
     for name, description, reaction_1_id, reaction_2_id in csv.reader(

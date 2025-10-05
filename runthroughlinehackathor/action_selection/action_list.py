@@ -35,3 +35,4 @@ action_list: tuple[Action, ...] = tuple(
         settings.actions_file.read_text().splitlines()[1:]
     )
 )
+name_to_action: dict[str, Action] = {a.name: a for a in action_list}

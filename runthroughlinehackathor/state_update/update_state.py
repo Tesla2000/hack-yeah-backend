@@ -25,6 +25,9 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
     remaining_time = settings.time_pre_turn - spent_time
     assert remaining_time >= 0
     state.parameters.health += settings.health_per_time_spent * remaining_time
+    state.parameters.money += (
+        settings.career_to_money_coefficient * state.parameters.career
+    )
     actions, random_event = await asyncio.gather(
         select_actions(
             history=state.history,
@@ -34,6 +37,7 @@ async def update_state(state: State, state_update: StateIncrement) -> None:
         select_random_event(state.history),
     )
     state.random_event = random_event
+    state.history.append(random_event)
     state.big_actions = list(
         a for a in actions if a.time_cost > settings.small_action_max_cost
     )
