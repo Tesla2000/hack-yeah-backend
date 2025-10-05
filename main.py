@@ -112,7 +112,7 @@ async def create_new_game(create_new_game_input: _CreateNewGameInput):
         )
     except Exception:
         _logger.error(traceback.format_exc())
-        return PlainTextResponse(traceback.format_exc())
+        return PlainTextResponse(traceback.format_exc(), status_code=500)
 
 
 @app.post("/next-turn", dependencies=[Depends(api_key_auth)])
@@ -132,7 +132,7 @@ async def get_next_state(state_update: StateIncrement):
         )
     except Exception:
         _logger.error(traceback.format_exc())
-        return PlainTextResponse(traceback.format_exc())
+        return PlainTextResponse(traceback.format_exc(), status_code=500)
 
 
 @app.get("/")
