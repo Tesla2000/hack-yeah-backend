@@ -9,6 +9,7 @@ reactions: dict[int, Reaction] = dict(
     (
         int(id_),
         Reaction(
+            id=id_,
             description=description,
             image_url="https://i.imgflip.com/61gawy.jpg",
             parameter_change=Parameters(
